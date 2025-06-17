@@ -10,5 +10,8 @@ function db_connect() {
         return $dbh;
     } catch (PDOException $e) {
         //We should set a global variable here so we know the DB is down
+        $GLOBALS['DB_DOWN'] = true;
+        echo "Database connection failed: " . $e->getMessage();
+        exit;
     }
 }
