@@ -27,6 +27,14 @@ class User {
          * $this->auth = true;
          */
 		$username = strtolower($username);
+      if (isset($_SESSION['failedAuth']) && $_SESSION['failedAuth'] >= 3) {
+          $elapsed = time() - ($_SESSION['lastFailed'] ?? 0);
+          if ($elapsed < 60) {
+              echo "Too many failed attempts. Try again in " . (60 - $elapsed) . " seconds.";
+              exit;
+          }
+      }
+
 		$db = db_connect();
         $statement = $db->prepare("select * from users WHERE username = :name;");
         $statement->bindValue(':name', $username);
