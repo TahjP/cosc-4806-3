@@ -37,3 +37,15 @@ button, .btn {
 button:hover, .btn:hover {
   background-color: #0056b3;
 }
+
+.alert {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.alert-info {
+  background-color: #e7f3fe;
+  border-color: #b3d8fd;
+  color: #31708f;
+}
