@@ -46,6 +46,7 @@ class User {
 			$_SESSION['auth'] = 1;
 			$_SESSION['username'] = ucwords($username);
 			unset($_SESSION['failedAuth']);
+      unset($_SESSION['failedAuth'], $_SESSION['lastFailed']);
 			header('Location: /home');
 			die;
 		} else {
