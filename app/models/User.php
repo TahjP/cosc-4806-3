@@ -14,6 +14,7 @@ class User {
 
     public function test () {
       $db = db_connect();
+      $log = $db->prepare("INSERT INTO log (username, attempt) VALUES (:username, :attempt);");
       $statement = $db->prepare("select * from users;");
       $statement->execute();
       $rows = $statement->fetch(PDO::FETCH_ASSOC);
