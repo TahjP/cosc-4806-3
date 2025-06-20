@@ -34,6 +34,7 @@ class User {
         $rows = $statement->fetch(PDO::FETCH_ASSOC);
 		
 		if (password_verify($password, $rows['password'])) {
+      $log->execute(['username' => $username, 'attempt' => 'good']);
 			$_SESSION['auth'] = 1;
 			$_SESSION['username'] = ucwords($username);
 			unset($_SESSION['failedAuth']);
