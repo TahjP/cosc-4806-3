@@ -3,7 +3,7 @@
 /* database connection stuff here
  * 
  */
-require_once ('core/config.php');
+require_once ('app/core/config.php');
 
 function db_connect() {
     try { 
