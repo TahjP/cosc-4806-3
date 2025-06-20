@@ -52,15 +52,14 @@ class User {
 
       
 		} else {
+      
       // log failed login
       try {
           $log->execute(['username' => $username, 'attempt' => 'bad']);
       } catch (PDOException $e) {
           error_log("Logging error (bad): " . $e->getMessage());
       }
-		}
-
-      
+		} 
     }
 
   
