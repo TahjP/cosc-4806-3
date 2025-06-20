@@ -44,22 +44,26 @@ class User {
 		
 		if (password_verify($password, $rows['password'])) {
       // log successful login
-      $log->execute(['username' => $username, 'attempt' => 'good']);
-			$_SESSION['auth'] = 1;
-			$_SESSION['username'] = ucwords($username);
-			unset($_SESSION['failedAuth']);
-      unset($_SESSION['failedAuth'], $_SESSION['lastFailed']);
-			header('Location: /home');
-			die;
+      try {
+          $log->execute(['username' => $username, 'attempt' => 'good']);
+      } catch (PDOException $e) {
+          error_log("Logging error (good): " . $e->getMessage());
+      }
+
+      
 		} else {
       // log failed login
-      $log->execute(['username' => $username, 'attempt' => 'bad']);
-      $_SESSION['failedAuth'] = ($_SESSION['failedAuth'] ?? 0) + 1;// increment failed attempts
-      $_SESSION['lastFailed'] = time();
-			header('Location: /login');
-			die;
+      try {
+          $log->execute(['username' => $username, 'attempt' => 'bad']);
+      } catch (PDOException $e) {
+          error_log("Logging error (bad): " . $e->getMessage());
+      }
 		}
+
+      
     }
+
+  
     public function register($username, $password) {
         $db = db_connect();
 
