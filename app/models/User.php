@@ -27,6 +27,7 @@ class User {
          * $this->auth = true;
          */
 		$username = strtolower($username);
+      // lock user out after 3 fqailed attempts for 60 seconds
       if (isset($_SESSION['failedAuth']) && $_SESSION['failedAuth'] >= 3) {
           $elapsed = time() - ($_SESSION['lastFailed'] ?? 0);
           if ($elapsed < 60) {
@@ -42,6 +43,7 @@ class User {
         $rows = $statement->fetch(PDO::FETCH_ASSOC);
 		
 		if (password_verify($password, $rows['password'])) {
+      // log successful login
       $log->execute(['username' => $username, 'attempt' => 'good']);
 			$_SESSION['auth'] = 1;
 			$_SESSION['username'] = ucwords($username);
@@ -50,8 +52,9 @@ class User {
 			header('Location: /home');
 			die;
 		} else {
+      // log failed login
       $log->execute(['username' => $username, 'attempt' => 'bad']);
-      $_SESSION['failedAuth'] = ($_SESSION['failedAuth'] ?? 0) + 1;
+      $_SESSION['failedAuth'] = ($_SESSION['failedAuth'] ?? 0) + 1;// increment failed attempts
       $_SESSION['lastFailed'] = time();
 			header('Location: /login');
 			die;
