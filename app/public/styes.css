@@ -49,3 +49,10 @@ button:hover, .btn:hover {
   border-color: #b3d8fd;
   color: #31708f;
 }
+
+.text-center {
+  text-align: center;
+}
+.mt-2 {
+  margin-top: 0.5rem;
+}
