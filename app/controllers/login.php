@@ -14,4 +14,7 @@ class Login extends Controller {
 			$user->authenticate($username, $password); 
     }
 
+			public function create() {
+					$this->view('login/create');
+			}
 }
