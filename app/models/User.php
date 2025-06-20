@@ -42,11 +42,8 @@ class User {
 			die;
 		} else {
       $log->execute(['username' => $username, 'attempt' => 'bad']);
-			if(isset($_SESSION['failedAuth'])) {
-				$_SESSION['failedAuth'] ++; //increment
-			} else {
-				$_SESSION['failedAuth'] = 1;
-			}
+      $_SESSION['failedAuth'] = ($_SESSION['failedAuth'] ?? 0) + 1;
+
 			header('Location: /login');
 			die;
 		}
