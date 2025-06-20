@@ -43,7 +43,7 @@ class User {
 		} else {
       $log->execute(['username' => $username, 'attempt' => 'bad']);
       $_SESSION['failedAuth'] = ($_SESSION['failedAuth'] ?? 0) + 1;
-
+      $_SESSION['lastFailed'] = time();
 			header('Location: /login');
 			die;
 		}
