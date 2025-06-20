@@ -17,4 +17,18 @@ class Login extends Controller {
 			public function create() {
 					$this->view('login/create');
 			}
+	
+			public function store() {
+					$username = strtolower(trim($_REQUEST['username']));
+					$password = $_REQUEST['password'];
+
+					$user = $this->model('User');
+					$message = $user->register($username, $password);
+
+					if ($message === null) {
+							exit; // user has been redirected from model
+					}
+
+					$this->view('login/create', ['message' => $message]);
+			}
 }
